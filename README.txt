@@ -1,21 +1,16 @@
-STUDY DESK AI — QUALITY-CHECK BUILD
+Study Desk AI — Multiple Image Upload Update
 
-Included
-- index.html: responsive study assistant, document upload and camera capture, copy answer, per-answer PDF/Word/PowerPoint/Excel downloads, and an in-app AI application readiness checklist.
-- netlify/functions/chat.mjs: server-side Groq API proxy, vision model routing, request validation, response validation, timeout and readable errors.
-- netlify.toml: Netlify publish/function configuration.
+This build allows selecting up to 24 images in one selection. The browser compresses each image before sending. Because the vision service supports a limited number of images per request, the app submits images in batches of up to three and combines the answers. Each batch is analysed separately, so users should review the combined response and ensure important details are not missed.
 
-DEPLOY
-1. Keep the folder structure intact. netlify/functions/chat.mjs must remain at that exact path.
-2. Commit index.html, netlify.toml, and netlify/functions/chat.mjs to the connected GitHub repository.
-3. In Netlify, set GROQ_API_KEY as an environment variable for the deployed site. Never put the secret in index.html or GitHub.
-4. Trigger/retry a deploy after setting the variable.
-5. Test on the deployed HTTPS URL: text question, clear camera photo, uploaded text-based PDF/DOCX/XLSX/PPTX, copy, and all four per-answer download formats.
+Deployment:
+1. Replace index.html in your existing GitHub repository with this file.
+2. Keep netlify.toml and netlify/functions/chat.mjs in their existing locations.
+3. Keep GROQ_API_KEY configured in Netlify environment variables; never commit the key.
+4. Commit changes and wait for Netlify deployment.
+5. Test 1, 3, 4, 20 and 24 images. Test files should be clear, readable images.
 
-IMPORTANT LIMITATIONS / LAUNCH FEEDBACK
-- This is a static front end plus a Netlify function. It does not yet provide user accounts, persistent cloud chat history, billing, a database, admin moderation, analytics, or production-grade rate limiting.
-- Document extraction is browser-based and relies on third-party CDN libraries. Internet access is needed for those libraries; scanned PDFs may need OCR or a clear photo.
-- PDF and office-format export libraries may fail if their CDN is blocked. Test each download on mobile and desktop. Excel may fall back to CSV depending on library availability; a CSV is not an XLSX workbook.
-- AI can be wrong. Users should verify critical facts and must not treat output as professional medical, legal, financial, or safety advice.
-- Before public launch, add rate limiting/abuse prevention, usage limits and budget alerts, a privacy notice and data-handling plan, accessible keyboard/screen-reader checks, and monitoring/error reporting.
-- Do not claim the live deployment is fully verified until the test plan above passes against the real Netlify URL and API key.
+Limitations:
+- Maximum 24 images per selection.
+- Images are analysed in batches of up to three, so the AI does not compare all images in a single model request. Combined results are provided in the final response.
+- Large batches may take longer and consume more API usage. Individual images over 7 MB before compression are rejected.
+- Live deployment must be tested after updating GitHub/Netlify.
