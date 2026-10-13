@@ -1,16 +1,22 @@
-Study Desk AI — Multiple Image Upload Update
+STUDY DESK AI — IMAGE PREVIEW AND ANSWER EDITOR BUILD
 
-This build allows selecting up to 24 images in one selection. The browser compresses each image before sending. Because the vision service supports a limited number of images per request, the app submits images in batches of up to three and combines the answers. Each batch is analysed separately, so users should review the combined response and ensure important details are not missed.
+WHAT CHANGED
+- Selected images are now shown as thumbnail previews before the user sends a question.
+- Up to 24 selected images are supported in one selection. The UI lists each image filename and lets the user remove an individual image or clear all attachments.
+- A single image selected from the file picker or captured using the camera is previewed too.
+- Sent user messages retain visible image thumbnails in the chat history.
+- Each AI answer has an Edit answer control. Users can edit the answer, save changes, or cancel. Copy and answer-download actions use the edited text.
+- Existing camera capture, batch processing, copy, and PDF/Word/PowerPoint/Excel answer downloads are retained.
 
-Deployment:
-1. Replace index.html in your existing GitHub repository with this file.
-2. Keep netlify.toml and netlify/functions/chat.mjs in their existing locations.
-3. Keep GROQ_API_KEY configured in Netlify environment variables; never commit the key.
-4. Commit changes and wait for Netlify deployment.
-5. Test 1, 3, 4, 20 and 24 images. Test files should be clear, readable images.
+DEPLOYMENT
+1. Replace the matching files in the existing GitHub repository with the files in this ZIP.
+2. Keep netlify/functions/chat.mjs at that exact path and keep netlify.toml in the project root.
+3. Keep GROQ_API_KEY configured in Netlify environment variables. Never commit API keys to GitHub.
+4. Commit the changes and wait for Netlify deployment to complete.
+5. On the live website, select several images and confirm the thumbnails appear before sending. Remove one image, send the rest, then test Edit answer, Save, Cancel, Copy, and all four download formats.
 
-Limitations:
-- Maximum 24 images per selection.
-- Images are analysed in batches of up to three, so the AI does not compare all images in a single model request. Combined results are provided in the final response.
-- Large batches may take longer and consume more API usage. Individual images over 7 MB before compression are rejected.
-- Live deployment must be tested after updating GitHub/Netlify.
+LIMITATIONS / TESTING
+- Browser-side syntax checks and ZIP integrity checks are not a substitute for testing the deployed app and actual API calls.
+- The app accepts up to 24 images, but sends them to the AI in batches of three. Large selections take longer and may consume more API usage.
+- Image previews are browser-local; they are not uploaded to a permanent image-storage service by this UI.
+- Keep images clear and below the current 7 MB per-image limit.
