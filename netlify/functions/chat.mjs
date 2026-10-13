@@ -3,7 +3,7 @@ const ALLOWED_MODELS = new Set([
   "openai/gpt-oss-20b",
   "llama-3.3-70b-versatile",
 ]);
-const VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
+const VISION_MODEL = "qwen/qwen3.8-27b";
 const MAX_BODY_CHARS = 8_000_000;
 const MAX_MESSAGES = 24;
 const MAX_TEXT_CHARS = 120_000;
